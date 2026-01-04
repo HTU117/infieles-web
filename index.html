@@ -211,7 +211,7 @@
         /* Lista de anécdotas */
         .feed {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 columnas SIEMPRE (Móvil y PC) */
+            grid-template-columns: repeat(2, 1fr); /* 2 columnas para mejor lectura */
             gap: 8px; /* Espacio pequeñito en móvil para que quepan */
         }
 
@@ -1160,7 +1160,7 @@
         document.getElementById('backBtn').addEventListener('click', () => {
             if (unsubscribeComments) unsubscribeComments(); // Dejar de escuchar comentarios al salir
             document.getElementById('detailView').style.display = 'none';
-            document.getElementById('feed').style.display = 'flex';
+            document.getElementById('feed').style.display = 'grid';
             document.querySelector('.toolbar').style.display = 'flex'; // Mostrar barra
             // No ocultamos el form porque ahora es sidebar
         });
