@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cazando Infieles - Confesiones Anónimas</title>
+    <!-- Fuente Poppins para un look más moderno -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff4757; /* Rojo vibrante */
+            --primary-hover: #ff6b81;
+            --bg-color: #121212; /* Negro profundo */
+            --surface-color: #1e1e1e; /* Gris oscuro para tarjetas */
+            --surface-hover: #252525;
+            --text-color: #ffffff;
+            --text-secondary: #a4b0be;
+            --border-color: #333333;
+            --shadow: 0 8px 24px rgba(0,0,0,0.4);
+            --radius: 16px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #0f0f0f, #1f1f1f, #2e0c10, #0f0f0f);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header {
+            background-color: rgba(18, 18, 18, 0.9);
+            backdrop-filter: blur(10px);
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #ffffff, var(--primary-color), #ff00cc, #ffffff);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleAnimation 6s linear infinite;
+        }
+
+        @keyframes titleAnimation {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        header p {
+            margin: 5px 0 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Layout Principal */
+        .main-layout {
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            gap: 30px;
+        }
+
+        @media (min-width: 900px) {
+            .main-layout {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+            .sidebar {
+                width: 350px;
+                position: sticky;
+                top: 100px;
+                flex-shrink: 0;
+            }
+            .content-area {
+                flex-grow: 1;
+            }
+        }
+
+        /* Formulario */
+        .confession-form {
+            background-color: var(--surface-color);
+            padding: 25px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+
+        .confession-form h2 {
+            margin-top: 0;
+            font-size: 1.4rem;
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px 15px;
+            background-color: #121212;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: white;
+            font-size: 0.95rem;
+            font-family: inherit;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: #1a1a1a;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Barra de Herramientas (Buscador + Filtro) */
+        .toolbar {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+            background: var(--surface-color);
+            padding: 15px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+        }
+        @media (min-width: 600px) {
+            .toolbar {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        .search-box {
+            flex-grow: 1;
+            width: auto;
+            margin: 0;
+        }
+        .search-box input {
+            border-radius: 30px;
+            background-color: #121212;
+            text-align: left;
+            padding-left: 20px;
+        }
+        
+        #sortSelect {
+            padding: 10px 20px;
+            border-radius: 30px;
+            background: #121212;
+            color: white;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        /* Lista de anécdotas */
+        .feed {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columnas SIEMPRE (Móvil y PC) */
+            gap: 8px; /* Espacio pequeñito en móvil para que quepan */
+        }
+
+        /* Estructura de 3 columnas exactas (cuadritos) para pantallas más grandes */
+        @media (min-width: 768px) {
+            .feed {
+                gap: 20px; /* Espacio normal en PC */
+            }
+        }
+
+        .card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 10px; /* Relleno reducido en móvil */
+            border-radius: var(--radius);
+            animation: fadeIn 0.5s ease-in;
+            display: flex;
+            flex-direction: column; /* Cambio a columna para Grid */
+            justify-content: space-between;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Restaurar tamaño normal en PC */
+        @media (min-width: 768px) {
+            .card {
+                padding: 20px;
+            }
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border-color: #444;
+        }
+        
+        /* Decoración superior de la tarjeta */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), #8e44ad);
+        }
+
+        .card-number {
+            position: absolute;
+            top: 15px; right: 15px;
+            font-size: 0.8rem;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .card-info {
+            flex-grow: 1;
+            margin-bottom: 15px;
+        }
+
+        .cheater-name {
+            display: block;
+            font-weight: 700;
+            font-size: 0.85rem; /* Letra más pequeña en móvil para que quepa */
+            color: white;
+            margin-bottom: 5px;
+            margin-top: 10px;
+            word-break: break-word; /* Evita que nombres largos rompan el cuadro */
+            line-height: 1.2;
+        }
+
+        @media (min-width: 768px) {
+            .cheater-name {
+                font-size: 1.1rem;
+            }
+        }
+
+        .post-date {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .card-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+        }
+
+        .view-btn {
+            background-color: transparent;
+            color: var(--text-secondary);
+            border: 1px solid #444;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .view-btn:hover {
+            background-color: white;
+            color: black;
+            transform: none;
+        }
+
+        .like-btn {
+            background: rgba(255, 71, 87, 0.1);
+            border: none;
+            color: var(--primary-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        .like-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Estilos para la vista de detalle */
+        #detailView {
+            display: none;
+            background-color: var(--surface-color);
+            padding: 30px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            animation: fadeIn 0.3s;
+        }
+        .back-btn {
+            background-color: #333;
+            border: none;
+            width: auto;
+            padding: 8px 20px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            color: white;
+            border-radius: 20px;
+        }
+        .back-btn:hover { background-color: #444; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Modal Resumen */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInModal 0.3s ease-out;
+        }
+        .modal-content {
+            background: #1e1e1e;
+            padding: 0;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid #444;
+            box-shadow: 0 10px 30px rgba(230, 57, 70, 0.3);
+            position: relative;
+            overflow: hidden;
+            transform: scale(0.9);
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        .modal-header {
+            background: var(--primary-color);
+            padding: 20px;
+            color: white;
+            position: relative;
+        }
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        .close-modal {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: rgba(255,255,255,0.8);
+            line-height: 1;
+            transition: color 0.2s;
+        }
+        .close-modal:hover { color: white; }
+        
+        .modal-body {
+            padding: 25px;
+        }
+        
+        .modal-info-badges {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .badge {
+            background: #333;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid #555;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .summary-box {
+            background: rgba(0,0,0,0.2);
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            text-align: left;
+            border-radius: 0 5px 5px 0;
+            margin-bottom: 20px;
+        }
+        .summary-title {
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+            font-size: 1rem;
+        }
+        .summary-text {
+            color: #ccc;
+            font-style: italic;
+            line-height: 1.5;
+            margin: 0;
+        }
+        .extra-data {
+            margin-top: 10px;
+            color: #ff9f1c;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: block;
+        }
+        
+        .modal-footer {
+            padding: 0 25px 25px 25px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .btn-modal {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-size: 0.95rem;
+            flex: 1;
+        }
+        .btn-primary-modal {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 10px rgba(230, 57, 70, 0.3);
+        }
+        .btn-primary-modal:hover {
+            background: #d62828;
+            transform: translateY(-2px);
+        }
+        .btn-secondary-modal {
+            background: #444;
+            color: #ccc;
+        }
+        .btn-secondary-modal:hover {
+            background: #555;
+            color: white;
+        }
+
+        @keyframes fadeInModal {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes popIn {
+            to { transform: scale(1); }
+        }
+
+        /* Estilos Comentarios */
+        .comments-section {
+            margin-top: 30px;
+            border-top: 1px solid #444;
+            padding-top: 20px;
+        }
+        .comment-form {
+            background: #222;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .comment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .comment-item {
+            background: #2a2a2a;
+            padding: 12px;
+            border-radius: 5px;
+            border-left: 3px solid var(--primary-color);
+        }
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        .comment-author {
+            color: white;
+            font-weight: bold;
+        }
+        .toggle-comments-btn {
+            background-color: #333;
+            color: white;
+            border: 1px solid #555;
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .toggle-comments-btn:hover {
+            background-color: #444;
+        }
+
+        /* Estilos para imágenes */
+        .card-image {
+            width: 100%;
+            height: 220px; /* Altura consistente para el grid */
+            object-fit: cover;
+            object-position: center top; /* Enfoca rostros automáticamente */
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: block;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .detail-image {
+            width: 100%;
+            height: auto;
+            max-height: 60vh; /* Se adapta al 60% de la pantalla del celular */
+            object-fit: cover; /* Llena el espacio elegantemente */
+            object-position: center top;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            border: 1px solid #333;
+            display: none;
+        }
+        .modal-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            object-position: center top;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .preview-image {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Sección Compartir */
+        .share-box {
+            background-color: var(--surface-color);
+            padding: 20px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            margin-top: 25px;
+            text-align: center;
+        }
+        .share-btn {
+            background-color: #25D366; /* WhatsApp Green */
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+        .share-btn:hover {
+            background-color: #128C7E;
+        }
+
+        /* Estilos para Navegación por Pestañas */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .nav-tab {
+            background: transparent;
+            border: 1px solid #444;
+            color: #aaa;
+            padding: 8px 24px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .nav-tab.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+        }
+        
+        /* Clases para ocultar secciones */
+        .section-hidden { display: none !important; }
+        
+        /* Ajuste para centrar el formulario cuando está solo */
+        .sidebar.centered-form { width: 100%; max-width: 600px; margin: 0 auto; position: static; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>💔 Cazando <span>Infieles</span></h1>
+        <p>El lugar seguro para exponer la verdad anónimamente.</p>
+        <div class="nav-tabs">
+            <button id="tabFeed" class="nav-tab active">🔥 Ver Chismes</button>
+            <button id="tabPublish" class="nav-tab">📝 Publicar</button>
+        </div>
+    </header>
+
+    <div class="main-layout" id="mainLayout">
+        
+        <!-- COLUMNA IZQUIERDA: FORMULARIO -->
+        <aside class="sidebar section-hidden" id="sidebarSection">
+        <section class="confession-form">
+            <h2>🔥 Publicar Confesión</h2>
+            <form id="anecdoteForm">
+                <div class="form-group">
+                    <label for="cheaterName">Nombre del Infiel:</label>
+                    <input type="text" id="cheaterName" placeholder="Ej: El mentiroso de Carlos" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cheaterLastName">Apellido del infiel:</label>
+                    <input type="text" id="cheaterLastName" placeholder="Ej: Pérez">
+                </div>
+
+                <!-- 2. Opción Hombre/Mujer -->
+                <div class="form-group">
+                    <label for="cheaterGender">Género del Infiel:</label>
+                    <select id="cheaterGender" style="width: 100%; padding: 10px; background-color: #121212; border: 1px solid #333; border-radius: 8px; color: white;">
+                        <option value="Hombre">Hombre</option>
+                        <option value="Mujer">Mujer</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="cheaterAge">Edad:</label>
+                    <input type="number" id="cheaterAge" placeholder="Ej: 28">
+                </div>
+
+                <div class="form-group">
+                    <label for="location">¿De dónde es? (Pais/Lugar):</label>
+                    <input type="text" id="location" placeholder="Ej: Honduras, San Pedro Sula..." required>
+                </div>
+
+                <!-- Campo adicional para el resumen -->
+                <div class="form-group">
+                    <label for="loverName">¿Con quién te engañó?:</label>
+                    <input type="text" id="loverName" placeholder="Ej: María Funez, su secretaria...">
+                </div>
+
+                <div class="form-group">
+                    <label for="story">¿Cómo te engañó? (Cuenta el chisme completo):</label>
+                    <textarea id="story" rows="5" placeholder="Cuéntalo todo, no te guardes nada..." required></textarea>
+                </div>
+
+                <button type="submit">🚀 Publicar Anónimamente</button>
+            </form>
+        </section>
+
+        <div class="share-box">
+            <p style="color: white; font-weight: bold; margin-top: 0;">📢 ¡Que se corra la voz!</p>
+            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 15px;">Comparte la página para que haya más chambres 🔥</p>
+            <button id="sharePageBtn" class="share-btn">📲 Compartir Página</button>
+        </div>
+        </aside>
+
+        <!-- COLUMNA DERECHA: CONTENIDO -->
+        <main class="content-area" id="contentSection">
+            
+            <!-- Barra de Herramientas -->
+            <div class="toolbar">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Buscar infiel por nombre...">
+                </div>
+                <select id="sortSelect">
+                    <option value="timestamp">📅 Más recientes</option>
+                    <option value="likes">❤️ Más votadas</option>
+                </select>
+            </div>
+
+            <!-- Área donde se ven las anécdotas -->
+            <section id="feed" class="feed">
+                <!-- Aquí se insertarán las historias con JavaScript -->
+            </section>
+
+            <!-- Vista de Detalle (Donde se ve toda la info) -->
+            <section id="detailView">
+                <button class="back-btn" id="backBtn">⬅ Volver al muro</button>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <h2 id="detailName" style="color: var(--primary-color); margin-top:0;"></h2>
+                    <button id="detailLikeBtn" class="like-btn">❤️ <span id="detailLikeCount">0</span></button>
+                </div>
+                <p style="color: #aaa; font-style: italic;">
+                    📍 <span id="detailLocation"></span> | 🎂 <span id="detailAge"></span> | ⚧ <span id="detailGender"></span>
+                </p>
+                <p id="detailLover" style="color: #fff; font-weight: bold;"></p>
+                <hr style="border-color: #444;">
+                <div id="detailStory" style="font-size: 1.1rem; line-height: 1.8; margin: 20px 0; color: #ddd;"></div>
+                <div style="text-align: right; color: #666; font-size: 0.8rem;">
+                    Publicado el: <span id="detailDate"></span>
+                </div>
+
+                <!-- Sección de Comentarios -->
+                <div class="comments-section">
+                    <button id="toggleCommentsBtn" class="toggle-comments-btn">💬 Opinar / Ver Comentarios</button>
+                    <div id="commentsContainer" style="display: none; margin-top: 15px;">
+                        <h3>💬 Comentarios</h3>
+                        <div class="comment-form">
+                            <input type="text" id="comAuthor" placeholder="Tu apodo (Opcional)" style="margin-bottom: 10px;">
+                            <textarea id="comText" rows="2" placeholder="Deja tu opinión..." style="margin-bottom: 10px;"></textarea>
+                            <button id="btnSubmitComment" style="padding: 10px; font-size: 0.9rem;">Comentar 👇</button>
+                        </div>
+                        <div id="commentsList" class="comment-list"></div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- 6. Panel Intermedio (Modal) -->
+        <div id="summaryModal" class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close-modal" id="closeModalX">&times;</span>
+                    <h3 id="modalName">Nombre</h3>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="modal-info-badges" id="modalBadges">
+                        <!-- Se llenará con JS -->
+                    </div>
+                    <div class="summary-box">
+                        <span class="summary-title">📝 Resumen del chisme:</span>
+                        <p id="modalSummary" class="summary-text">...</p>
+                        <span id="modalExtra" class="extra-data"></span>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="btnCloseModal" class="btn-modal btn-secondary-modal">Cerrar</button>
+                    <button id="btnFullStory" class="btn-modal btn-primary-modal">🔥 Ver todo</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module">
+        // Importamos las funciones necesarias de Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // --- CONFIGURACIÓN DE FIREBASE ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyCJ0hXAgFqi5paT9soeAvwFzNvIOOL-eh4",
+            authDomain: "infieles-e9fc6.firebaseapp.com",
+            projectId: "infieles-e9fc6",
+            storageBucket: "infieles-e9fc6.firebasestorage.app",
+            messagingSenderId: "280897601662",
+            appId: "1:280897601662:web:6e984c6238e15f4523582f",
+            measurementId: "G-QZCW2088ED"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const form = document.getElementById('anecdoteForm');
+        const feed = document.getElementById('feed');
+        const searchInput = document.getElementById('searchInput');
+        const sortSelect = document.getElementById('sortSelect');
+        const commentsContainer = document.getElementById('commentsContainer');
+        
+        // Elementos de Navegación
+        const tabFeed = document.getElementById('tabFeed');
+        const tabPublish = document.getElementById('tabPublish');
+        const sidebarSection = document.getElementById('sidebarSection');
+        const contentSection = document.getElementById('contentSection');
+        const mainLayout = document.getElementById('mainLayout');
+
+        // Función para cambiar de pestaña
+        function switchTab(tab) {
+            if (tab === 'feed') {
+                sidebarSection.classList.add('section-hidden');
+                sidebarSection.classList.remove('centered-form');
+                contentSection.classList.remove('section-hidden');
+                tabFeed.classList.add('active');
+                tabPublish.classList.remove('active');
+                mainLayout.style.display = 'block'; 
+            } else {
+                contentSection.classList.add('section-hidden');
+                sidebarSection.classList.remove('section-hidden');
+                sidebarSection.classList.add('centered-form');
+                tabPublish.classList.add('active');
+                tabFeed.classList.remove('active');
+                mainLayout.style.display = 'block';
+            }
+        }
+
+        tabFeed.addEventListener('click', () => switchTab('feed'));
+        tabPublish.addEventListener('click', () => switchTab('publish'));
+
+        // Variables para el modal
+        const summaryModal = document.getElementById('summaryModal');
+        let currentAnecdote = null; // Para pasar datos del modal al detalle completo
+        let unsubscribeComments = null; // Para detener la escucha de comentarios al salir
+
+        // --- LEER HISTORIAS (Con Filtro) ---
+        let unsubscribeFeed = null;
+
+        function loadStories(sortField) {
+            if (unsubscribeFeed) unsubscribeFeed(); // Detener escucha anterior
+
+            const q = query(collection(db, "anecdotas"), orderBy(sortField, "desc"));
+            
+            unsubscribeFeed = onSnapshot(q, (snapshot) => {
+                feed.innerHTML = ''; 
+                let index = 1; 
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    data.id = doc.id; 
+                    addStoryToDOM(data, index);
+                    index++;
+                });
+            });
+        }
+
+        // Cargar por defecto (Más recientes)
+        loadStories('timestamp');
+
+        // Evento cambio de filtro
+        sortSelect.addEventListener('change', (e) => {
+            loadStories(e.target.value);
+        });
+
+        // 1. Buscador
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const name = card.querySelector('.cheater-name').textContent.toLowerCase();
+                if(name.includes(term)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // --- SUBIR HISTORIA ---
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('cheaterName').value;
+            const lastName = document.getElementById('cheaterLastName').value;
+            const age = document.getElementById('cheaterAge').value;
+            const gender = document.getElementById('cheaterGender').value; // 2. Género
+            const location = document.getElementById('location').value;
+            const loverName = document.getElementById('loverName').value; // Datos extra
+            const story = document.getElementById('story').value;
+
+            if(name && location && story) {
+                const btn = form.querySelector('button[type="submit"]');
+                const originalText = btn.textContent;
+                btn.disabled = true; // Evitar doble clic mientras sube
+
+                try {
+                    btn.textContent = "Guardando chisme... 🔥";
+
+                    await addDoc(collection(db, "anecdotas"), {
+                        name: name,
+                        lastName: lastName,
+                        age: age,
+                        gender: gender,
+                        location: location,
+                        loverName: loverName,
+                        story: story,
+                        likes: 0, // Inicializar likes para que aparezca en el filtro
+                        date: new Date().toLocaleDateString(),
+                        timestamp: serverTimestamp()
+                    });
+                    form.reset();
+                    alert('¡Tu anécdota ha sido publicada para todo el mundo! 🔥');
+                    switchTab('feed');
+                } catch (error) {
+                    console.error("Error al subir:", error);
+                    alert("Ocurrió un error: " + error.message + "\n(Si dice 'permission-denied', revisa las reglas de Storage en Firebase)");
+                } finally {
+                    // Restaurar botón siempre, haya error o no
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                }
+            }
+        });
+
+        function addStoryToDOM(anecdote, index) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            // 5. Enumeración a la izquierda
+            const numDiv = document.createElement('div');
+            numDiv.className = 'card-number';
+            numDiv.textContent = index;
+
+            // Info central
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'card-info';
+            
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'cheater-name';
+            nameSpan.textContent = `👤 ${anecdote.name} ${anecdote.lastName || ''}`;
+            
+            // 4. Fecha automática abajo del nombre
+            const dateDiv = document.createElement('div');
+            dateDiv.className = 'post-date';
+            dateDiv.textContent = `📅 Subido el: ${anecdote.date || 'Fecha desconocida'}`;
+            
+            infoDiv.appendChild(nameSpan);
+            infoDiv.appendChild(dateDiv);
+            
+            // Contenedor de acciones (Like + Ver)
+            const actionsDiv = document.createElement('div');
+            actionsDiv.className = 'card-actions';
+
+            // Botón Like
+            const likeBtn = document.createElement('button');
+            likeBtn.className = 'like-btn';
+            likeBtn.innerHTML = `❤️ ${anecdote.likes || 0}`;
+            likeBtn.onclick = (e) => {
+                e.stopPropagation(); // Evitar que se abra el modal al dar like
+                handleLike(anecdote.id);
+            };
+
+            // 3. Botón "Ver" a la par
+            const btn = document.createElement('button');
+            btn.className = 'view-btn';
+            btn.textContent = '👁️ Ver';
+            btn.onclick = () => openSummaryModal(anecdote); // 6. Abre modal intermedio
+
+            actionsDiv.appendChild(likeBtn);
+            actionsDiv.appendChild(btn);
+
+            card.appendChild(numDiv);
+            card.appendChild(infoDiv);
+            card.appendChild(actionsDiv);
+            
+            feed.appendChild(card);
+        }
+
+        // 6. Lógica del Modal Intermedio
+        function openSummaryModal(data) {
+            currentAnecdote = data;
+            document.getElementById('modalName').textContent = `${data.name} ${data.lastName || ''}`;
+            
+            // Badges logic
+            const badgesContainer = document.getElementById('modalBadges');
+            badgesContainer.innerHTML = `
+                <span class="badge">📍 ${data.location}</span>
+                <span class="badge">🎂 ${data.age || '?'} años</span>
+                <span class="badge">⚧ ${data.gender || '?'}</span>
+            `;
+            
+            // Resumen
+            const summary = data.story.length > 120 ? data.story.substring(0, 120) + '...' : data.story;
+            document.getElementById('modalSummary').textContent = `"${summary}"`;
+            
+            // Extra
+            if (data.loverName) {
+                document.getElementById('modalExtra').textContent = `⚠️ Engaño con: ${data.loverName}`;
+                document.getElementById('modalExtra').style.display = 'block';
+            } else {
+                document.getElementById('modalExtra').style.display = 'none';
+            }
+
+            summaryModal.style.display = 'flex';
+        }
+
+        // Eventos del Modal
+        document.getElementById('closeModalX').onclick = () => summaryModal.style.display = 'none';
+        document.getElementById('btnCloseModal').onclick = () => summaryModal.style.display = 'none';
+        
+        document.getElementById('btnFullStory').onclick = () => {
+            summaryModal.style.display = 'none';
+            showDetails(currentAnecdote);
+        };
+
+        // Funciones para manejar la vista de detalle
+        function showDetails(data) {
+            document.getElementById('feed').style.display = 'none';
+            document.querySelector('.search-box').style.display = 'none'; // Ocultar buscador
+            document.querySelector('.confession-form').style.display = 'none';
+            document.getElementById('detailView').style.display = 'block';
+            
+            document.getElementById('detailName').textContent = `👤 ${data.name} ${data.lastName || ''}`;
+            document.getElementById('detailLocation').textContent = data.location;
+            document.getElementById('detailAge').textContent = data.age ? `${data.age} años` : 'Edad desconocida';
+            document.getElementById('detailGender').textContent = data.gender || 'No especificado';
+            
+            if(data.loverName) {
+                document.getElementById('detailLover').textContent = `🔥 Infidelidad con: ${data.loverName}`;
+            } else {
+                document.getElementById('detailLover').textContent = '';
+            }
+
+            document.getElementById('detailStory').textContent = `"${data.story}"`;
+            document.getElementById('detailDate').textContent = data.date;
+            commentsContainer.style.display = 'none'; // Asegurar que esté oculto al abrir
+            
+            // Configurar botón de like en detalle
+            const detailLikeBtn = document.getElementById('detailLikeBtn');
+            const detailLikeCount = document.getElementById('detailLikeCount');
+            detailLikeCount.textContent = data.likes || 0;
+            
+            // Clonar para eliminar eventos anteriores
+            const newBtn = detailLikeBtn.cloneNode(true);
+            detailLikeBtn.parentNode.replaceChild(newBtn, detailLikeBtn);
+            
+            // Asignar evento al nuevo botón
+            newBtn.onclick = () => handleLike(data.id, true);
+
+            // Cargar comentarios
+            loadComments(data.id);
+        }
+
+        // Cargar comentarios en tiempo real
+        function loadComments(anecdoteId) {
+            const list = document.getElementById('commentsList');
+            list.innerHTML = '<p style="color:#666; text-align:center;">Cargando opiniones...</p>';
+
+            // Referencia a la subcolección "comments" dentro de la anécdota
+            const commentsRef = collection(db, "anecdotas", anecdoteId, "comments");
+            const qComments = query(commentsRef, orderBy("timestamp", "desc"));
+
+            unsubscribeComments = onSnapshot(qComments, (snapshot) => {
+                list.innerHTML = '';
+                if (snapshot.empty) {
+                    list.innerHTML = '<p style="color:#666; font-style:italic;">Sé el primero en opinar...</p>';
+                    return;
+                }
+                snapshot.forEach(doc => {
+                    const c = doc.data();
+                    const item = document.createElement('div');
+                    item.className = 'comment-item';
+                    item.innerHTML = `
+                        <div class="comment-header">
+                            <span class="comment-author">${c.author || 'Anónimo'}</span>
+                            <span>${c.date}</span>
+                        </div>
+                        <div class="comment-text">${c.text}</div>
+                    `;
+                    list.appendChild(item);
+                });
+            });
+        }
+
+        // Botón para mostrar/ocultar comentarios
+        document.getElementById('toggleCommentsBtn').addEventListener('click', () => {
+            if (commentsContainer.style.display === 'none') {
+                commentsContainer.style.display = 'block';
+            } else {
+                commentsContainer.style.display = 'none';
+            }
+        });
+
+        // Función para dar Like
+        async function handleLike(id, isDetailView = false) {
+            const key = `liked_${id}`;
+            if (localStorage.getItem(key)) {
+                alert("¡Ya le diste amor a este chisme! ❤️");
+                return;
+            }
+
+            const docRef = doc(db, "anecdotas", id);
+            try {
+                await updateDoc(docRef, {
+                    likes: increment(1)
+                });
+                localStorage.setItem(key, "true");
+                if(isDetailView) {
+                    const countSpan = document.getElementById('detailLikeCount');
+                    countSpan.textContent = parseInt(countSpan.textContent) + 1;
+                }
+            } catch (error) {
+                console.error("Error al dar like:", error);
+            }
+        }
+
+        // Enviar comentario
+        document.getElementById('btnSubmitComment').addEventListener('click', async () => {
+            if (!currentAnecdote || !currentAnecdote.id) return;
+            
+            const author = document.getElementById('comAuthor').value.trim();
+            const text = document.getElementById('comText').value.trim();
+
+            if (!text) {
+                alert("Escribe algo antes de enviar.");
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "anecdotas", currentAnecdote.id, "comments"), {
+                    author: author || "Anónimo",
+                    text: text,
+                    date: new Date().toLocaleDateString(),
+                    timestamp: serverTimestamp()
+                });
+                document.getElementById('comText').value = ''; // Limpiar campo
+                commentsContainer.style.display = 'none'; // Ocultar después de comentar
+                alert("¡Comentario enviado!");
+            } catch (error) {
+                console.error("Error al comentar:", error);
+                alert("No se pudo enviar el comentario.");
+            }
+        });
+
+        document.getElementById('backBtn').addEventListener('click', () => {
+            if (unsubscribeComments) unsubscribeComments(); // Dejar de escuchar comentarios al salir
+            document.getElementById('detailView').style.display = 'none';
+            document.getElementById('feed').style.display = 'flex';
+            document.querySelector('.toolbar').style.display = 'flex'; // Mostrar barra
+            // No ocultamos el form porque ahora es sidebar
+        });
+
+        // Funcionalidad del botón compartir página
+        document.getElementById('sharePageBtn').addEventListener('click', () => {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Cazando Infieles 💔',
+                    text: '¡Entra y mira los chismes o quema a tu infiel! 🔥',
+                    url: window.location.href
+                }).catch((error) => console.log('Error compartiendo', error));
+            } else {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('Link copiado al portapapeles 📋\n¡Pásalo a tus grupos!');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
